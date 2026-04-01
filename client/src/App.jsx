@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import CustomCursor from './components/CustomCursor';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -23,6 +24,7 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
 function App() {
   return (
     <AuthProvider>
+      <CustomCursor />
       <Router>
         <div className="app-container">
           <Navbar />

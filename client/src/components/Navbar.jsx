@@ -42,7 +42,7 @@ const Navbar = () => {
             </Link>
 
             {/* Navigation Links */}
-            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', flex: 1, justifyContent: 'center' }}>
                 <NavLink to="/charities" className="nav-link">
                     <Heart size={18} /> <span>Charities</span>
                 </NavLink>
@@ -62,11 +62,9 @@ const Navbar = () => {
                         )}
                     </>
                 ) : (
-                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                        <Link to="/admin-login" style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textDecoration: 'none', opacity: 0.7 }}>
-                            Admin Portal
-                        </Link>
-                    </div>
+                    <NavLink to="/admin-login" className="nav-link">
+                        <ShieldAlert size={18} /> <span>Admin Portal</span>
+                    </NavLink>
                 )}
             </div>
 
