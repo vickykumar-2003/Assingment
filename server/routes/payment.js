@@ -8,7 +8,11 @@ const User = require('../models/User');
 router.post('/create-checkout-session', auth, async (req, res) => {
     try {
         const { planId } = req.body; // 'monthly' or 'yearly'
-        const priceId = planId === 'yearly' ? 'price_yearly_id' : 'price_monthly_id';
+        
+        // Use Stripe Price IDs from .env or placeholders for testing
+        const priceId = planId === 'yearly' ? 
+            (process.env.STRIPE_YEARLY_PRICE_ID || 'price_yearly_placeholder') : 
+            (process.env.STRIPE_MONTHLY_PRICE_ID || 'price_monthly_placeholder');
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
@@ -19,8 +23,8 @@ router.post('/create-checkout-session', auth, async (req, res) => {
                 },
             ],
             mode: 'subscription',
-            success_url: `${process.env.CLIENT_URL}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${process.env.CLIENT_URL}/dashboard`,
+            success_url: `${process.env.CLIENT_URL || 'http://localhost:5173'}/dashboard?session_id={CHECKOUT_SESSION_ID}&success=true`,
+            cancel_url: `${process.env.CLIENT_URL || 'http://localhost:5173'}/dashboard?cancelled=true`,
             metadata: {
                 userId: req.user.id.toString(),
             },
@@ -126,9 +130,17 @@ router.post('/mock-subscribe', auth, async (req, res) => {
         await user.save();
 
         res.json({ 
-            message: `Successfully subscribed to ${planId} plan!`, 
+            message: `Successfully subscribed to ${planId} plan! Welcome aboard Legend.`, 
             subscriptionStatus: 'active',
-            expiryDate
+            plan: planId,
+            expiryDate,
+            user: {
+                id: user._id,
+                username: user.username,
+                subscriptionStatus: user.subscriptionStatus,
+                subscriptionPlan: user.subscriptionPlan,
+                subscriptionExpiryDate: user.subscriptionExpiryDate
+            }
         });
     } catch (err) {
         res.status(500).json({ message: err.message });

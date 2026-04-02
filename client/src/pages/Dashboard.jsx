@@ -139,17 +139,60 @@ const Dashboard = () => {
                 </div>
                 {/* Global Subscription Paywall Overlay */}
                 {(profile?.subscriptionStatus !== 'active') && (
-                    <div style={{ position: 'fixed', top: '80px', left: 0, right: 0, bottom: 0, zIndex: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(8px)', background: 'rgba(0,0,0,0.4)' }}>
+                    <div style={{ position: 'fixed', top: '0', left: 0, right: 0, bottom: 0, zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(12px)', background: 'rgba(0,0,0,0.7)', padding: '1rem' }}>
                         <motion.div 
-                            initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+                            initial={{ scale: 0.9, opacity: 0 }} 
+                            animate={{ scale: 1, opacity: 1 }}
                             className="glass" 
-                            style={{ padding: '3rem', textAlign: 'center', maxWidth: '450px', border: '1px solid var(--accent-primary)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}
+                            style={{ 
+                                padding: '3.5rem 2.5rem', 
+                                textAlign: 'center', 
+                                maxWidth: '500px', 
+                                width: '100%',
+                                border: '1px solid rgba(0, 255, 204, 0.3)', 
+                                boxShadow: '0 0 50px rgba(0, 255, 204, 0.1)',
+                                borderRadius: '32px',
+                                background: 'linear-gradient(180deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%)'
+                            }}
                         >
-                            <Lock size={48} color="var(--accent-primary)" style={{ marginBottom: '1.5rem' }} />
-                            <h2 style={{ fontSize: '2rem', fontWeight: '800', marginBottom: '1rem' }}>Access Restricted</h2>
-                            <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>You need an active subscription to play, post scores, and enter the monthly prize draws.</p>
-                            <button className="btn-primary" style={{ width: '100%', padding: '1rem' }} onClick={() => window.location.href='/subscribe'}>Upgrade to Play</button>
-                            <p style={{ marginTop: '1rem', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Status: <span style={{ color: '#ff4d4d' }}>{profile?.subscriptionStatus?.toUpperCase()}</span></p>
+                            <div style={{ marginBottom: '2rem' }}>
+                                <motion.div 
+                                    animate={{ rotate: [0, 10, -10, 0] }}
+                                    transition={{ duration: 4, repeat: Infinity }}
+                                    style={{ display: 'inline-block' }}
+                                >
+                                    <Award size={64} color="var(--accent-primary)" style={{ filter: 'drop-shadow(0 0 15px rgba(0, 255, 204, 0.5))' }} />
+                                </motion.div>
+                            </div>
+
+                            <h2 style={{ fontSize: '2.5rem', fontWeight: '900', marginBottom: '0.75rem', letterSpacing: '-1px' }}>Legendary Access</h2>
+                            <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '2.5rem', lineHeight: '1.5' }}>
+                                Your journey to the top of the leaderboard starts with an active subscription.
+                            </p>
+
+                            <div style={{ textAlign: 'left', background: 'rgba(255,255,255,0.03)', padding: '1.5rem', borderRadius: '20px', marginBottom: '2.5rem', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                <p style={{ fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', color: 'var(--accent-primary)', marginBottom: '1rem', letterSpacing: '1px' }}>What you get:</p>
+                                <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                    <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.9rem', color: '#fff' }}>
+                                        <CheckCircle size={16} color="var(--accent-primary)" /> Post unlimited scores weekly
+                                    </li>
+                                    <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.9rem', color: '#fff' }}>
+                                        <CheckCircle size={16} color="var(--accent-primary)" /> Entry into the $10,000 Monthly Draw
+                                    </li>
+                                    <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.9rem', color: '#fff' }}>
+                                        <CheckCircle size={16} color="var(--accent-primary)" /> 10% direct donation to your charity
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <button className="btn-primary" style={{ width: '100%', padding: '1.25rem', fontSize: '1.1rem', fontWeight: '900', borderRadius: '16px' }} onClick={() => window.location.href='/subscribe'}>
+                                Upgrade Now to Play
+                            </button>
+                            
+                            <div style={{ marginTop: '1.5rem', display: 'flex', itemsAlign: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff4d4d', alignSelf: 'center' }}></div>
+                                <p style={{ fontSize: '0.8rem', fontWeight: '700', color: '#ff4d4d' }}>Status: {profile?.subscriptionStatus?.toUpperCase() || 'INACTIVE'}</p>
+                            </div>
                         </motion.div>
                     </div>
                 )}
