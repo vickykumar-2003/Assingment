@@ -11,8 +11,16 @@ const auth = async (req, res, next) => {
             throw new Error();
         }
 
+        // Real-time subscription check on every request
+        const now = new Date();
+        if (user.role === 'user' && user.subscriptionStatus === 'active' && user.subscriptionExpiryDate && user.subscriptionExpiryDate < now) {
+            user.subscriptionStatus = 'expired';
+            await user.save();
+        }
+
         req.token = token;
         req.user = user;
+        req.isSubscribed = user.subscriptionStatus === 'active' || user.role === 'admin';
         next();
     } catch (e) {
         res.status(401).send({ error: 'Please authenticate.' });

@@ -76,6 +76,20 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
         );
     }
 
+    if (event.type === 'invoice.payment_succeeded') {
+        const invoice = event.data.object;
+        if (invoice.subscription) {
+            const subscription = await stripe.subscriptions.retrieve(invoice.subscription);
+            await User.findOneAndUpdate(
+                { stripeCustomerId: invoice.customer },
+                { 
+                    subscriptionStatus: 'active',
+                    subscriptionExpiryDate: new Date(subscription.current_period_end * 1000)
+                }
+            );
+        }
+    }
+
     if (event.type === 'invoice.payment_failed') {
         const invoice = event.data.object;
         await User.findOneAndUpdate(

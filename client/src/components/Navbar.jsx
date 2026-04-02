@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { Trophy, LogOut, LayoutDashboard, Heart, Award, ShieldAlert, LogIn, UserPlus, Menu, X } from 'lucide-react';
+import { Trophy, LogOut, LayoutDashboard, Heart, Award, ShieldAlert, LogIn, UserPlus, Menu, X, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 
@@ -74,6 +74,14 @@ const Navbar = () => {
             <div className="hide-mobile" style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                 {user ? (
                     <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                            {user.subscriptionStatus === 'active' ? (
+                                <ShieldCheck size={14} color="var(--accent-primary)" />
+                            ) : (
+                                <AlertTriangle size={14} color="#ff4d4d" />
+                            )}
+                            <span style={{ fontSize: '0.75rem', fontWeight: '800', letterSpacing: '0.5px' }}>{user.subscriptionStatus?.toUpperCase() || 'INACTIVE'}</span>
+                        </div>
                         <motion.button 
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}

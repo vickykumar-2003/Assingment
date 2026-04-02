@@ -137,19 +137,21 @@ const Dashboard = () => {
                     <h1 style={{ fontSize: '2.5rem', fontWeight: '800' }}>Welcome, <span className="text-gradient">{profile?.username}</span></h1>
                     <p style={{ color: 'var(--text-secondary)' }}>You're currently ranked in the top {((rank / 100) * 100).toFixed(0) || '...'}% of players this month.</p>
                 </div>
-                {/* Subscription Alert */}
+                {/* Global Subscription Paywall Overlay */}
                 {(profile?.subscriptionStatus !== 'active') && (
-                    <motion.div 
-                        initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-                        className="glass" 
-                        style={{ padding: '1rem 1.5rem', border: '1px solid #ff4d4d', display: 'flex', alignItems: 'center', gap: '1rem', background: 'rgba(255, 77, 77, 0.05)' }}
-                    >
-                        <AlertCircle color="#ff4d4d" />
-                        <div>
-                            <p style={{ fontSize: '0.9rem', fontWeight: '800', color: '#ff4d4d' }}>Subscription {profile?.subscriptionStatus?.toUpperCase()}</p>
-                            <button onClick={() => window.location.href='/subscribe'} style={{ background: 'none', border: 'none', color: '#fff', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.75rem', padding: 0 }}>Renew Now</button>
-                        </div>
-                    </motion.div>
+                    <div style={{ position: 'fixed', top: '80px', left: 0, right: 0, bottom: 0, zIndex: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(8px)', background: 'rgba(0,0,0,0.4)' }}>
+                        <motion.div 
+                            initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+                            className="glass" 
+                            style={{ padding: '3rem', textAlign: 'center', maxWidth: '450px', border: '1px solid var(--accent-primary)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}
+                        >
+                            <Lock size={48} color="var(--accent-primary)" style={{ marginBottom: '1.5rem' }} />
+                            <h2 style={{ fontSize: '2rem', fontWeight: '800', marginBottom: '1rem' }}>Access Restricted</h2>
+                            <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>You need an active subscription to play, post scores, and enter the monthly prize draws.</p>
+                            <button className="btn-primary" style={{ width: '100%', padding: '1rem' }} onClick={() => window.location.href='/subscribe'}>Upgrade to Play</button>
+                            <p style={{ marginTop: '1rem', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>Status: <span style={{ color: '#ff4d4d' }}>{profile?.subscriptionStatus?.toUpperCase()}</span></p>
+                        </motion.div>
+                    </div>
                 )}
                 {/* Emotional Message Box */}
                 <motion.div 

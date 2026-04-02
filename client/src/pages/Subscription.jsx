@@ -5,7 +5,7 @@ import { CheckCircle, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Subscription = () => {
-    const { token, user: authUser } = useAuth();
+    const { token, fetchUser } = useAuth();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [currentPlan, setCurrentPlan] = useState(null);
@@ -27,6 +27,7 @@ const Subscription = () => {
             await axios.post('/api/payment/cancel-subscription');
             setMessage('Subscription cancelled successfully.');
             setCurrentPlan(null);
+            fetchUser(); // Sync Global State
         } catch (err) {
             setMessage('Failed to cancel. Please try again.');
         } finally {
@@ -40,6 +41,7 @@ const Subscription = () => {
         try {
             await axios.post('/api/payment/mock-subscribe', { planId: plan });
             setMessage('Payment Successful! Your subscription is now active.');
+            fetchUser(); // Sync Global State
             // Redirect after 2 seconds
             setTimeout(() => {
                 window.location.href = '/dashboard';
