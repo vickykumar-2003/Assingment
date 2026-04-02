@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { auth } = require('../middleware/auth');
+const { checkSubscription } = require('../middleware/subscription');
 const User = require('../models/User');
 const Score = require('../models/Score');
 const Draw = require('../models/Draw');
@@ -17,7 +18,7 @@ router.get('/profile', auth, async (req, res) => {
 });
 
 // Update Scores - Stableford Logic
-router.post('/scores', auth, async (req, res) => {
+router.post('/scores', auth, checkSubscription, async (req, res) => {
     try {
         const { par, strokes } = req.body;
         if (!par || !strokes) {
@@ -131,7 +132,7 @@ router.get('/prizes', auth, async (req, res) => {
 });
 
 // Upload proof (Winner Verification)
-router.post('/claim-prize', auth, async (req, res) => {
+router.post('/claim-prize', auth, checkSubscription, async (req, res) => {
     try {
         const { prizeId, proofScreenshot } = req.body;
         const prize = await Prize.findOne({ _id: prizeId, userId: req.user.id });

@@ -5,9 +5,34 @@ import { CheckCircle, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Subscription = () => {
-    const { token } = useAuth();
+    const { token, user: authUser } = useAuth();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
+    const [currentPlan, setCurrentPlan] = useState(null);
+
+    React.useEffect(() => {
+        const fetchStatus = async () => {
+            try {
+                const res = await axios.get('/api/user/profile');
+                setCurrentPlan(res.data.subscriptionPlan !== 'none' ? res.data.subscriptionPlan : null);
+            } catch (err) { console.error(err); }
+        };
+        fetchStatus();
+    }, []);
+
+    const handleCancel = async () => {
+        if (!window.confirm('Are you sure you want to cancel? You will lose access to premium features.')) return;
+        setLoading(true);
+        try {
+            await axios.post('/api/payment/cancel-subscription');
+            setMessage('Subscription cancelled successfully.');
+            setCurrentPlan(null);
+        } catch (err) {
+            setMessage('Failed to cancel. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const subscribe = async (plan) => {
         setLoading(true);
@@ -58,11 +83,11 @@ const Subscription = () => {
 
                     <button 
                         className="btn-primary" 
-                        style={{ width: '100%', padding: '1rem' }}
-                        onClick={() => subscribe('monthly')}
+                        style={{ width: '100%', padding: '1rem', background: currentPlan === 'monthly' ? 'rgba(0,255,204,0.1)' : '' }}
+                        onClick={() => currentPlan === 'monthly' ? handleCancel() : subscribe('monthly')}
                         disabled={loading}
                     >
-                        {loading ? 'Processing...' : 'Subscribe Monthly'}
+                        {loading ? 'Processing...' : (currentPlan === 'monthly' ? 'Cancel Monthly' : 'Subscribe Monthly')}
                     </button>
                     <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textAlign: 'center', marginTop: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
                         <ShieldCheck size={14} /> Mock Payment Sandbox
@@ -90,11 +115,11 @@ const Subscription = () => {
 
                     <button 
                         className="btn-primary" 
-                        style={{ width: '100%', padding: '1rem', background: 'var(--accent-secondary)' }}
-                        onClick={() => subscribe('yearly')}
+                        style={{ width: '100%', padding: '1rem', background: currentPlan === 'yearly' ? 'rgba(255,102,153,0.1)' : 'var(--accent-secondary)' }}
+                        onClick={() => currentPlan === 'yearly' ? handleCancel() : subscribe('yearly')}
                         disabled={loading}
                     >
-                        {loading ? 'Processing...' : 'Subscribe Yearly'}
+                        {loading ? 'Processing...' : (currentPlan === 'yearly' ? 'Cancel Yearly' : 'Subscribe Yearly')}
                     </button>
                     <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textAlign: 'center', marginTop: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
                         <ShieldCheck size={14} /> Mock Payment Sandbox

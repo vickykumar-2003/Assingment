@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { Trophy, TrendingUp, Heart, Plus, History, Share2 } from 'lucide-react';
+import { Trophy, TrendingUp, Heart, Plus, History, Share2, Award, Lock, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800';
@@ -137,6 +137,20 @@ const Dashboard = () => {
                     <h1 style={{ fontSize: '2.5rem', fontWeight: '800' }}>Welcome, <span className="text-gradient">{profile?.username}</span></h1>
                     <p style={{ color: 'var(--text-secondary)' }}>You're currently ranked in the top {((rank / 100) * 100).toFixed(0) || '...'}% of players this month.</p>
                 </div>
+                {/* Subscription Alert */}
+                {(profile?.subscriptionStatus !== 'active') && (
+                    <motion.div 
+                        initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
+                        className="glass" 
+                        style={{ padding: '1rem 1.5rem', border: '1px solid #ff4d4d', display: 'flex', alignItems: 'center', gap: '1rem', background: 'rgba(255, 77, 77, 0.05)' }}
+                    >
+                        <AlertCircle color="#ff4d4d" />
+                        <div>
+                            <p style={{ fontSize: '0.9rem', fontWeight: '800', color: '#ff4d4d' }}>Subscription {profile?.subscriptionStatus?.toUpperCase()}</p>
+                            <button onClick={() => window.location.href='/subscribe'} style={{ background: 'none', border: 'none', color: '#fff', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.75rem', padding: 0 }}>Renew Now</button>
+                        </div>
+                    </motion.div>
+                )}
                 {/* Emotional Message Box */}
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.9 }} 
@@ -181,19 +195,25 @@ const Dashboard = () => {
                         </h3>
                     </div>
 
-                    <form onSubmit={handleAddScore} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <form onSubmit={handleAddScore} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', position: 'relative', opacity: profile?.subscriptionStatus === 'active' ? 1 : 0.5 }}>
+                        {profile?.subscriptionStatus !== 'active' && (
+                            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 10, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'rgba(0,0,0,0.1)', backdropFilter: 'blur(2px)', borderRadius: '12px' }}>
+                                <Lock size={24} color="#fff" />
+                                <p style={{ fontSize: '0.7rem', fontWeight: '700', marginTop: '0.5rem' }}>SUBSCRIBE TO PLAY</p>
+                            </div>
+                        )}
                         <div style={{ display: 'flex', gap: '1rem' }}>
                             <div style={{ flex: 1 }}>
                                 <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', marginBottom: '0.25rem', display: 'block' }}>Course Par</label>
-                                <input type="number" className="input-field" placeholder="Par (3-5)" value={par} onChange={(e) => setPar(e.target.value)} required />
+                                <input type="number" className="input-field" placeholder="Par (3-5)" value={par} onChange={(e) => setPar(e.target.value)} required disabled={profile?.subscriptionStatus !== 'active'} />
                             </div>
                             <div style={{ flex: 1 }}>
                                 <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', marginBottom: '0.25rem', display: 'block' }}>Strokes Taken</label>
-                                <input type="number" className="input-field" placeholder="Strokes" value={strokes} onChange={(e) => setStrokes(e.target.value)} required />
+                                <input type="number" className="input-field" placeholder="Strokes" value={strokes} onChange={(e) => setStrokes(e.target.value)} required disabled={profile?.subscriptionStatus !== 'active'} />
                             </div>
                         </div>
-                        <button type="submit" className="btn-primary" style={{ padding: '0.75rem 1.25rem' }}>
-                            Calculate Stableford Points
+                        <button type="submit" className="btn-primary" style={{ padding: '0.75rem 1.25rem' }} disabled={profile?.subscriptionStatus !== 'active'}>
+                            {profile?.subscriptionStatus === 'active' ? 'Calculate Stableford Points' : 'Disabled'}
                         </button>
                     </form>
 

@@ -46,8 +46,42 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
     if (event.type === 'checkout.session.completed') {
         const session = event.data.object;
         const userId = session.metadata.userId;
+        const subscriptionId = session.subscription;
+        const customerId = session.customer;
         
-        await User.findByIdAndUpdate(userId, { subscriptionStatus: 'active' });
+        // Assume 1 month for monthly, 1 year for yearly (simplified)
+        const expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 30); 
+
+        await User.findByIdAndUpdate(userId, { 
+            subscriptionStatus: 'active',
+            stripeSubscriptionId: subscriptionId,
+            stripeCustomerId: customerId,
+            subscriptionExpiryDate: expiryDate
+        });
+    }
+
+    if (event.type === 'customer.subscription.deleted' || event.type === 'customer.subscription.updated') {
+        const subscription = event.data.object;
+        const status = subscription.status; // 'active', 'canceled', 'unpaid', 'past_due'
+        
+        const mappedStatus = (status === 'active') ? 'active' : (status === 'canceled' ? 'cancelled' : 'expired');
+        
+        await User.findOneAndUpdate(
+            { stripeSubscriptionId: subscription.id },
+            { 
+                subscriptionStatus: mappedStatus,
+                subscriptionExpiryDate: new Date(subscription.current_period_end * 1000)
+            }
+        );
+    }
+
+    if (event.type === 'invoice.payment_failed') {
+        const invoice = event.data.object;
+        await User.findOneAndUpdate(
+            { stripeCustomerId: invoice.customer },
+            { subscriptionStatus: 'expired', lastPaymentStatus: 'failed' }
+        );
     }
 
     res.json({ received: true });
