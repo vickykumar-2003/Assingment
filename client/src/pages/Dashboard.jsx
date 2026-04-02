@@ -114,8 +114,8 @@ const Dashboard = () => {
     const totalDonations = Math.round((profile?.contributionPercentage / 100) * 20 * (profile?.subscriptionPlan === 'yearly' ? 12 : 1)); // Simplified calculation
 
     return (
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
-            <header style={{ marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem' }}>
+            <header className="mobile-stack" style={{ marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '2rem' }}>
                 <div>
                     <h1 style={{ fontSize: '2.5rem', fontWeight: '800' }}>Welcome, <span className="text-gradient">{profile?.username}</span></h1>
                     <p style={{ color: 'var(--text-secondary)' }}>You're currently ranked in the top {((rank / 100) * 100).toFixed(0) || '...'}% of players this month.</p>
@@ -125,9 +125,9 @@ const Dashboard = () => {
                     initial={{ opacity: 0, scale: 0.9 }} 
                     animate={{ opacity: 1, scale: 1 }}
                     className="glass" 
-                    style={{ padding: '1rem 1.5rem', border: '1px solid var(--accent-primary)', textAlign: 'center', maxWidth: '250px' }}
+                    style={{ padding: '1rem 1.5rem', border: '1px solid var(--accent-primary)', textAlign: 'center', width: '100%', maxWidth: '300px' }}
                 >
-                    <Heart size={20} color="var(--accent-primary)" style={{ marginBottom: '0.5rem' }} />
+                    <Heart size={20} color="var(--accent-primary)" style={{ marginBottom: '0.5rem', display: 'inline-block' }} />
                     <p style={{ fontSize: '0.9rem', fontWeight: '700' }}>Impact Report</p>
                     <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>"You've helped support <strong>{Math.floor(totalDonations / 5) || 1} people</strong> through your contributions this month."</p>
                 </motion.div>
@@ -136,7 +136,7 @@ const Dashboard = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                 
                 {/* Stats Grid */}
-                <div style={{ gridColumn: 'span 2', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+                <div style={{ gridColumn: window.innerWidth < 1024 ? 'span 1' : 'span 2', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                     <div className="glass" style={{ padding: '1.5rem' }}>
                         <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase' }}>Subscription</p>
                         <h3 style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--accent-secondary)' }}>{profile?.subscriptionPlan?.toUpperCase()}</h3>
@@ -227,7 +227,7 @@ const Dashboard = () => {
                         </h3>
                         <button 
                             className="glass" 
-                            style={{ padding: '0.6rem 1.25rem', fontSize: '0.75rem', fontWeight: '800', color: 'var(--text-secondary)', border: '1px solid rgba(255,255,255,0.05)' }} 
+                            style={{ padding: '0.6rem 1rem', fontSize: '0.75rem', fontWeight: '800', color: 'var(--text-secondary)', border: '1px solid rgba(255,255,255,0.05)' }} 
                             onClick={() => window.location.href='/charities'}
                         >
                             Change Foundation
@@ -242,10 +242,10 @@ const Dashboard = () => {
                             style={{ width: '80px', height: '80px', borderRadius: '18px', objectFit: 'cover', boxShadow: '0 10px 20px rgba(0,0,0,0.3)' }} 
                         />
                         <div style={{ flex: 1 }}>
-                            <p style={{ fontSize: '1.2rem', fontWeight: '900', color: '#fff', marginBottom: '0.25rem' }}>{profile?.currentCharity?.name || 'No Cause Selected'}</p>
+                            <p style={{ fontSize: '1.1rem', fontWeight: '900', color: '#fff', marginBottom: '0.25rem' }}>{profile?.currentCharity?.name || 'No Cause Selected'}</p>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                 <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-primary)' }}></div>
-                                <span style={{ fontSize: '0.85rem', color: 'var(--accent-primary)', fontWeight: '700' }}>Contributing {profile?.contributionPercentage || 10}%</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--accent-primary)', fontWeight: '700' }}>{profile?.contributionPercentage || 10}% Contribution</span>
                             </div>
                         </div>
                     </div>

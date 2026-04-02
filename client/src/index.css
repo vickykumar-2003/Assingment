@@ -10,6 +10,12 @@
   --text-secondary: #94a3b8;
   --gradient-gold: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
   --shadow-glow: 0 0 20px rgba(0, 245, 160, 0.2);
+  
+  /* Responsive Font Sizes */
+  --fs-h1: clamp(2.5rem, 8vw, 4.5rem);
+  --fs-h2: clamp(1.8rem, 6vw, 2.5rem);
+  --fs-h3: clamp(1.4rem, 4vw, 1.8rem);
+  --fs-body: clamp(0.95rem, 1.5vw, 1.1rem);
 }
 
 * {
@@ -17,7 +23,12 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  cursor: none !important;
+}
+
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
 }
 
 body {
@@ -26,7 +37,12 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
-  cursor: none !important;
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none !important;
+  }
 }
 
 /* Glassmorphism utility */
@@ -110,21 +126,31 @@ select.input-field option {
 }
 
 /* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .nav-menu { gap: 1rem !important; }
+}
+
 @media (max-width: 768px) {
   .glass {
-    padding: 1.5rem !important;
+    padding: 1.25rem !important;
   }
   
   h1 {
-    font-size: 2rem !important;
+    font-size: var(--fs-h1) !important;
+    line-height: 1.1 !important;
   }
   
   .grid-cols-mobile {
     grid-template-columns: 1fr !important;
   }
 
-  .nav-menu {
-    display: none !important; /* Hide on mobile by default, but let's keep it desktop first */
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .mobile-stack {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
   }
 }
 

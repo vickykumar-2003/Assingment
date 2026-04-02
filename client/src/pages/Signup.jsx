@@ -37,12 +37,12 @@ const Signup = () => {
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: '4rem 2rem' }}>
-            <div className="glass animate-fade-in" style={{ padding: '3rem', maxWidth: '500px', width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', padding: 'clamp(1rem, 5vw, 4rem) 1rem' }}>
+            <div className="glass animate-fade-in" style={{ padding: 'clamp(1.5rem, 5vw, 3rem)', maxWidth: '500px', width: '100%' }}>
                 <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
                     <UserPlus size={48} color="var(--accent-primary)" style={{ marginBottom: '1rem' }} />
-                    <h2 style={{ fontSize: '2rem', fontWeight: '800' }}>Join the Club</h2>
-                    <p style={{ color: 'var(--text-secondary)' }}>Sign up to play, win, and support charities.</p>
+                    <h2 style={{ fontSize: 'var(--fs-h2)', fontWeight: '800' }}>Join the Club</h2>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Sign up to play, win, and support charities.</p>
                 </div>
 
                 {error && <p style={{ color: '#ff4d4d', textAlign: 'center', marginBottom: '1rem' }}>{error}</p>}

@@ -33,11 +33,11 @@ const Login = () => {
             <div style={{ width: '100%', maxWidth: '440px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
                 {/* Login Card */}
-                <div className="glass animate-fade-in" style={{ padding: '3.5rem' }}>
+                <div className="glass animate-fade-in" style={{ padding: 'clamp(1.5rem, 5vw, 3.5rem)' }}>
                     <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
                         <LogIn size={48} color="var(--accent-primary)" style={{ marginBottom: '1rem' }} />
-                        <h2 style={{ fontSize: '2rem', fontWeight: '800' }}>Member Login</h2>
-                        <p style={{ color: 'var(--text-secondary)' }}>Login to manage your scores & draws.</p>
+                        <h2 style={{ fontSize: 'var(--fs-h2)', fontWeight: '800' }}>Member Login</h2>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Login to manage your scores & draws.</p>
                     </div>
 
                     {error && <p style={{ color: '#ff4d4d', textAlign: 'center', marginBottom: '1.5rem', background: 'rgba(255,77,77,0.1)', padding: '0.75rem', borderRadius: '8px', fontSize: '0.85rem' }}>{error}</p>}

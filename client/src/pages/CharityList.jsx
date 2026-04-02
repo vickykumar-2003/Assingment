@@ -27,11 +27,11 @@ const CharityList = () => {
     };
 
     return (
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '6rem 2rem' }}>
-            <header style={{ textAlign: 'center', marginBottom: '6rem' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: 'var(--fs-body) 1.5rem' }}>
+            <header style={{ textAlign: 'center', marginBottom: '3rem' }}>
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                    <h1 style={{ fontSize: '4.5rem', fontWeight: '900', marginBottom: '1.5rem', letterSpacing: '-2px', lineHeight: 1 }}>Support <span className="text-gradient">Impactful</span> Causes</h1>
-                    <p style={{ color: 'var(--text-secondary)', maxWidth: '700px', margin: '0 auto', fontSize: '1.25rem', lineHeight: 1.6 }}>
+                    <h1 style={{ fontSize: 'var(--fs-h1)', fontWeight: '900', marginBottom: '1.5rem', letterSpacing: '-2px', lineHeight: 1.1 }}>Support <span className="text-gradient">Impactful</span> Causes</h1>
+                    <p style={{ color: 'var(--text-secondary)', maxWidth: '700px', margin: '0 auto', fontSize: 'var(--fs-body)', lineHeight: 1.6 }}>
                         Explore our vetted charity partners. Every membership contribution fuels these organizations directly. Choose a cause you believe in.
                     </p>
                 </motion.div>
@@ -59,7 +59,7 @@ const CharityList = () => {
                     <p style={{ marginTop: '1rem', letterSpacing: '2px', fontWeight: '700' }}>DISCOVERING CAUSES...</p>
                 </div>
             ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))', gap: '3rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
                     <AnimatePresence>
                         {charities.length > 0 ? charities.map((charity, index) => (
                             <CharityCard key={charity._id} charity={charity} index={index} />
@@ -101,11 +101,11 @@ const CharityCard = ({ charity, index }) => {
                     TRUSTED PARTNER
                 </div>
             </div>
-            <div style={{ padding: '2.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                <h3 style={{ fontSize: '1.75rem', fontWeight: '900', marginBottom: '1rem', letterSpacing: '-0.5px' }}>{charity.name}</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: '1.6', marginBottom: '2rem' }}>{charity.description}</p>
+            <div style={{ padding: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: '900', marginBottom: '0.75rem', letterSpacing: '-0.5px' }}>{charity.name}</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '1.5rem' }}>{charity.description}</p>
                 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '2rem', borderTop: '1px solid var(--glass-border)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '1.5rem', borderTop: '1px solid var(--glass-border)', flexWrap: 'wrap', gap: '1rem' }}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontWeight: '800', letterSpacing: '1px' }}>MIN CONTRIBUTION</span>
                         <span style={{ fontSize: '1.25rem', fontWeight: '900', color: 'var(--accent-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

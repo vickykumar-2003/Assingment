@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto', overflow: 'hidden' }}>
       {/* Hero Section */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '5rem', alignItems: 'center', minHeight: '80vh', padding: '2rem 0' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem', alignItems: 'center', minHeight: '80vh', padding: '1rem 0' }}>
         <motion.div 
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
@@ -23,13 +23,13 @@ const Home = () => {
             NEW: Monthly Draw is now Live! ⛳️
           </motion.span>
           
-          <h1 style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', fontWeight: '900', lineHeight: '1.05', marginBottom: '2rem', letterSpacing: '-2px' }}>
+          <h1 style={{ fontSize: 'var(--fs-h1)', fontWeight: '900', lineHeight: '1.05', marginBottom: '2rem', letterSpacing: '-2px' }}>
             Play Golf. <br />
             <span className="text-gradient">Support Causes.</span> <br />
             Win Together.
           </h1>
           
-          <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', marginBottom: '3.5rem', lineHeight: '1.7', maxWidth: '600px' }}>
+          <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-secondary)', marginBottom: '3rem', lineHeight: '1.7', maxWidth: '600px' }}>
             Join the exclusive Golf Charity platform. Submit your Stableford scores, support vetted global charities, and enter massive monthly prize draws.
           </p>
           
@@ -76,7 +76,7 @@ const Home = () => {
         </motion.div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginTop: '4rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginTop: '4rem' }}>
         <FeatureCard 
           icon={<Trophy size={40} color="var(--accent-primary)" />} 
           title="Monthly Jackpots" 

@@ -144,9 +144,24 @@ const AdminPanel = () => {
     ];
 
     return (
-        <div style={{ display: 'flex', minHeight: '100vh', background: '#07090d', color: '#fff' }}>
+        <div style={{ display: 'flex', flexDirection: window.innerWidth < 1024 ? 'column' : 'row', minHeight: '100vh', background: '#07090d', color: '#fff' }}>
+            <style>{`
+                @media (max-width: 1024px) {
+                    aside { 
+                        width: 100% !important; 
+                        height: auto !important; 
+                        position: relative !important; 
+                        border-right: none !important;
+                        border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+                        padding: 1.5rem !important;
+                    }
+                    main { padding: 1.5rem !important; }
+                    .stats-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important; }
+                    .content-split { grid-template-columns: 1fr !important; }
+                }
+            `}</style>
             {/* Sidebar */}
-            <aside style={{ width: '300px', borderRight: '1px solid rgba(255,255,255,0.05)', padding: '2.5rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '2.5rem', position: 'sticky', top: 0, height: '100vh', background: 'rgba(255,255,255,0.01)', backdropFilter: 'blur(30px)' }}>
+            <aside style={{ width: '300px', borderRight: '1px solid rgba(255,255,255,0.05)', padding: '2.5rem 1.5rem', display: 'flex', flexDirection: window.innerWidth < 768 ? 'column' : 'column', gap: '2.5rem', position: 'sticky', top: 0, height: '100vh', background: 'rgba(255,255,255,0.01)', backdropFilter: 'blur(30px)' }}>
                 <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '1rem', padding: '0 0.5rem' }}>
                     <ShieldCheck size={32} color="var(--accent-primary)" />
                     <span style={{ fontSize: '1.5rem', fontWeight: '900', letterSpacing: '-1px' }}>ADMIN<span className="text-gradient">PRO</span></span>
@@ -184,7 +199,7 @@ const AdminPanel = () => {
             </aside>
 
             {/* Main Area */}
-            <main style={{ flex: 1, padding: '3.5rem', maxWidth: '1500px', overflowY: 'auto' }}>
+            <main style={{ flex: 1, padding: '3.5rem', maxWidth: '100vw', overflowX: 'hidden' }}>
                 <AnimatePresence mode="wait">
                     {/* View: Analytics (12 KPIs) */}
                     {view === 'analytics' && (
@@ -194,7 +209,7 @@ const AdminPanel = () => {
                                 <p style={{ color: 'var(--text-secondary)' }}>Live platform metrics and financial health.</p>
                             </div>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '3rem' }}>
+                            <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '3rem' }}>
                                 <StatCard color="var(--accent-primary)" icon={<Users />} label="Total Members" value={analytics?.userCount} />
                                 <StatCard color="var(--accent-secondary)" icon={<ShieldCheck />} label="Active Subs" value={analytics?.activeSubscriptions} />
                                 <StatCard color="#00ffcc" icon={<DollarSign />} label="Gross Revenue" value={`$${analytics?.totalRevenue}`} />
@@ -209,7 +224,7 @@ const AdminPanel = () => {
                                 <StatCard color="#8fd3f4" icon={<Heart />} label="NGO Partners" value={analytics?.charitiesCount} />
                             </div>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '2rem' }}>
+                            <div className="content-split" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '2rem' }}>
                                 <div className="glass" style={{ padding: '2.5rem', borderRadius: '25px' }}>
                                     <h3 style={{ marginBottom: '2rem', fontWeight: '800' }}>Impact Breakdown</h3>
                                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
