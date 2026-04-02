@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { Trophy, TrendingUp, Heart, Plus, History, Share2, Award, Lock, AlertCircle } from 'lucide-react';
+import { Trophy, TrendingUp, Heart, Plus, History, Share2, Award, Lock, AlertCircle, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800';
