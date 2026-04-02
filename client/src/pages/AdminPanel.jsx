@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const API = 'http://localhost:5000/api/admin';
+const API = '/api/admin';
 
 const AdminPanel = () => {
     const { token } = useAuth();

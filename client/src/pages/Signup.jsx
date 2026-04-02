@@ -17,7 +17,7 @@ const Signup = () => {
 
     const fetchCharities = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/charity');
+            const res = await axios.get('/api/charity');
             setCharities(res.data);
             if (res.data.length > 0) setFormData(prev => ({ ...prev, charityId: res.data[0]._id }));
         } catch (err) {
@@ -28,7 +28,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/signup', formData);
+            const res = await axios.post('/api/auth/signup', formData);
             login(res.data.token, res.data.user);
             navigate('/dashboard');
         } catch (err) {

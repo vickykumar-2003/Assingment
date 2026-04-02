@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Heart, Globe, Search, ArrowRight, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const API = 'http://localhost:5000/api/charity';
+const API = '/api/charity';
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800';
 
 const CharityList = () => {

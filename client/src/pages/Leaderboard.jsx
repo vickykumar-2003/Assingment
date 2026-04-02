@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Trophy, Award, TrendingUp, Users, Crown } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const API = 'http://localhost:5000/api/user';
+const API = '/api/user';
 
 const Leaderboard = () => {
     const [data, setData] = useState({ leaderboard: [], myRank: 0 });

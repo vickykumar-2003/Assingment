@@ -39,28 +39,28 @@ const Dashboard = () => {
 
     const fetchRank = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/user/leaderboard');
+            const res = await axios.get('/api/user/leaderboard');
             setRank(res.data.myRank);
         } catch (err) { console.error('Fetch rank error', err); }
     };
 
     const fetchPrizes = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/user/prizes');
+            const res = await axios.get('/api/user/prizes');
             setPrizes(res.data);
         } catch (err) { console.error('Fetch prizes error', err); }
     };
 
     const fetchLatestDraw = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/user/latest-draw');
+            const res = await axios.get('/api/user/latest-draw');
             setLatestDraw(res.data);
         } catch (err) { console.error('Fetch draw error', err); }
     };
 
     const fetchProfile = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/user/profile');
+            const res = await axios.get('/api/user/profile');
             setProfile(res.data);
         } catch (err) {
             console.error('Fetch profile error', err);
@@ -72,7 +72,7 @@ const Dashboard = () => {
     const handleAddScore = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/api/user/scores', { 
+            const res = await axios.post('/api/user/scores', { 
                 par: parseInt(par), 
                 strokes: parseInt(strokes) 
             });
@@ -90,7 +90,7 @@ const Dashboard = () => {
         if (!proof) return alert('Please provide proof (Screenshot URL)');
         setIsSubmitting(true);
         try {
-            await axios.post('http://localhost:5000/api/user/claim-prize', { prizeId: selectedPrize._id, proofScreenshot: proof });
+            await axios.post('/api/user/claim-prize', { prizeId: selectedPrize._id, proofScreenshot: proof });
             setShowClaimModal(false);
             setProof('');
             fetchPrizes();

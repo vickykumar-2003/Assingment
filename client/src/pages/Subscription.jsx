@@ -13,7 +13,7 @@ const Subscription = () => {
         setLoading(true);
         setMessage('');
         try {
-            await axios.post('http://localhost:5000/api/payment/mock-subscribe', { planId: plan });
+            await axios.post('/api/payment/mock-subscribe', { planId: plan });
             setMessage('Payment Successful! Your subscription is now active.');
             // Redirect after 2 seconds
             setTimeout(() => {

@@ -6,6 +6,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
@@ -22,7 +23,7 @@ app.use(express.json());
 app.use(cors());
 
 // DB Connection
-mongoose.connect('mongodb://localhost:27017/golf-charity')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/golf-charity')
 .then(() => console.log('MongoDB Connected'))
 .catch(err => console.error('MongoDB Error: ', err));
 
@@ -33,9 +34,16 @@ app.use('/api/charity', charityRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/payment', paymentRoutes);
 
-app.get('/', (req, res) => {
-    res.send('Golf Charity Platform API');
-});
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/dist')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../client', 'dist', 'index.html'));
+    });
+} else {
+    app.get('/', (req, res) => {
+        res.send('Golf Charity Platform API');
+    });
+}
 
 // Error Handler
 app.use((err, req, res, next) => {
