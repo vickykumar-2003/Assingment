@@ -108,7 +108,24 @@ const Dashboard = () => {
         return Math.max(0, days);
     };
 
-    if (loading) return <div style={{ textAlign: 'center', padding: '5rem', color: 'var(--text-secondary)' }}>Loading Dashboard...</div>;
+    if (loading) return (
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2.5rem' }}>
+            <div style={{ marginBottom: '3rem' }}>
+                <div className="skeleton" style={{ height: '50px', width: '300px', marginBottom: '1rem' }} />
+                <div className="skeleton" style={{ height: '20px', width: '500px' }} />
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                <div style={{ gridColumn: 'span 2', display: 'flex', gap: '1.5rem' }}>
+                    <div className="skeleton" style={{ flex: 1, height: '120px' }} />
+                    <div className="skeleton" style={{ flex: 1, height: '120px' }} />
+                    <div className="skeleton" style={{ flex: 1, height: '120px' }} />
+                </div>
+                <div className="skeleton" style={{ height: '350px' }} />
+                <div className="skeleton" style={{ height: '250px' }} />
+                <div className="skeleton" style={{ height: '350px' }} />
+            </div>
+        </div>
+    );
 
     const daysRemaining = getDaysRemaining();
     const totalDonations = Math.round((profile?.contributionPercentage / 100) * 20 * (profile?.subscriptionPlan === 'yearly' ? 12 : 1)); // Simplified calculation

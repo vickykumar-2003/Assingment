@@ -11,17 +11,18 @@ const CustomCursor = () => {
         setIsTouchDevice(window.matchMedia('(pointer: coarse)').matches);
     }, []);
 
-    // Spring configuration for the magnetic trailing effect
-    const springConfig = { damping: 25, stiffness: 150 };
+    // Snappier spring configuration for the magnetic trailing effect
+    const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
     const cursorX = useSpring(0, springConfig);
     const cursorY = useSpring(0, springConfig);
 
     useEffect(() => {
         if (isTouchDevice) return;
         const handleMouseMove = (e) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
-            cursorX.set(e.clientX - 16); // Center of the 32px ring
-            cursorY.set(e.clientY - 16);
+            const { clientX, clientY } = e;
+            setMousePosition({ x: clientX, y: clientY });
+            cursorX.set(clientX - 16);
+            cursorY.set(clientY - 16);
         };
 
         const handleMouseOver = (e) => {

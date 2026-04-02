@@ -22,10 +22,23 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-// DB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/golf-charity')
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.error('MongoDB Error: ', err));
+// DB Connection Options
+const dbOptions = {
+    serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+    socketTimeoutMS: 45000,
+};
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/golf-charity', dbOptions)
+.then(() => console.log('✅ MongoDB Connected Ready'))
+.catch(err => {
+    console.error('❌ MongoDB Connection Error: ', err.message);
+    console.log('⚠️ Running in degraded mode: Some features may be unavailable.');
+});
+
+// Handle connection lost
+mongoose.connection.on('error', err => {
+    console.error('🌐 MongoDB Late Error: ', err);
+});
 
 // Routes
 app.use('/api/auth', authRoutes);

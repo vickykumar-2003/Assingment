@@ -54,9 +54,21 @@ const CharityList = () => {
             </header>
 
             {loading ? (
-                <div style={{ display: 'grid', placeItems: 'center', height: '40vh', color: 'var(--text-secondary)' }}>
-                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}><Heart size={40} /></motion.div>
-                    <p style={{ marginTop: '1rem', letterSpacing: '2px', fontWeight: '700' }}>DISCOVERING CAUSES...</p>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
+                    {[1, 2, 3, 4, 5, 6].map(i => (
+                        <div key={i} className="glass" style={{ height: '450px', padding: '0' }}>
+                            <div className="skeleton" style={{ height: '240px', borderRadius: '28px 28px 0 0' }} />
+                            <div style={{ padding: '2.5rem' }}>
+                                <div className="skeleton" style={{ height: '30px', width: '70%', marginBottom: '1rem' }} />
+                                <div className="skeleton" style={{ height: '20px', width: '100%', marginBottom: '0.5rem' }} />
+                                <div className="skeleton" style={{ height: '20px', width: '90%', marginBottom: '2rem' }} />
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <div className="skeleton" style={{ height: '40px', width: '100px' }} />
+                                    <div className="skeleton" style={{ height: '40px', width: '120px' }} />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '2rem' }}>
@@ -94,8 +106,9 @@ const CharityCard = ({ charity, index }) => {
                 <img 
                     src={imgSrc} 
                     alt={charity.name} 
+                    loading="lazy"
                     onError={() => setImgSrc(FALLBACK_IMAGE)}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', transition: '0.5s' }} 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', transition: '0.6s' }} 
                 />
                 <div style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(10px)', padding: '0.5rem 1rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: '800', color: 'var(--accent-primary)', border: '1px solid rgba(255,255,255,0.1)' }}>
                     TRUSTED PARTNER
