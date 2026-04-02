@@ -5,32 +5,76 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
-    <div style={{ padding: '4rem 2rem', textAlign: 'center', maxWidth: '1200px', margin: '0 auto' }}>
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <span className="glass" style={{ padding: '0.5rem 1.5rem', borderRadius: '100px', fontSize: '0.875rem', color: 'var(--accent-primary)', marginBottom: '2rem', display: 'inline-block' }}>
-          NEW: Monthly Draw is now Live! ⛳️
-        </span>
-        <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 5rem)', fontWeight: '800', lineHeight: '1.1', marginBottom: '1.5rem' }}>
-          Play Golf. <br />
-          <span className="text-gradient">Support Causes.</span> <br />
-          Win Together.
-        </h1>
-        <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', maxWidth: '700px', margin: '0 auto 3rem', lineHeight: '1.6' }}>
-          Join the exclusive Golf Charity Subscription Platform. Manage your scores, support your favorite charities, and enter monthly draws with massive prize pools.
-        </p>
-        <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', marginBottom: '6rem' }}>
-          <Link to="/signup" className="btn-primary" style={{ textDecoration: 'none', padding: '1.25rem 2.5rem' }}>
-            Get Started Now <ArrowRight size={20} style={{ marginLeft: '10px', verticalAlign: 'middle' }} />
-          </Link>
-          <Link to="/charities" className="glass glass-hover" style={{ textDecoration: 'none', padding: '1.25rem 2.5rem', fontWeight: '600' }}>
-            Explore Charities
-          </Link>
-        </div>
-      </motion.div>
+    <div style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto', overflow: 'hidden' }}>
+      {/* Hero Section */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '5rem', alignItems: 'center', minHeight: '80vh', padding: '2rem 0' }}>
+        <motion.div 
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, cubicBezier: [0.16, 1, 0.3, 1] }}
+          style={{ textAlign: 'left' }}
+        >
+          <motion.span 
+            whileHover={{ scale: 1.05 }}
+            className="glass" 
+            style={{ padding: '0.6rem 1.5rem', borderRadius: '100px', fontSize: '0.85rem', color: 'var(--accent-primary)', marginBottom: '2.5rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: '700', border: '1px solid rgba(0, 245, 160, 0.2)' }}
+          >
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent-primary)', boxShadow: '0 0 10px var(--accent-primary)' }}></div>
+            NEW: Monthly Draw is now Live! ⛳️
+          </motion.span>
+          
+          <h1 style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', fontWeight: '900', lineHeight: '1.05', marginBottom: '2rem', letterSpacing: '-2px' }}>
+            Play Golf. <br />
+            <span className="text-gradient">Support Causes.</span> <br />
+            Win Together.
+          </h1>
+          
+          <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', marginBottom: '3.5rem', lineHeight: '1.7', maxWidth: '600px' }}>
+            Join the exclusive Golf Charity platform. Submit your Stableford scores, support vetted global charities, and enter massive monthly prize draws.
+          </p>
+          
+          <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+            <Link to="/signup" className="btn-primary" style={{ textDecoration: 'none', padding: '1.25rem 2.5rem', display: 'inline-flex', alignItems: 'center', fontSize: '1.1rem' }}>
+              Join the Club <ArrowRight size={20} style={{ marginLeft: '12px' }} />
+            </Link>
+            <Link to="/charities" className="glass glass-hover" style={{ textDecoration: 'none', padding: '1.25rem 2.5rem', fontWeight: '800', color: 'var(--text-primary)', fontSize: '1.1rem', display: 'inline-flex', alignItems: 'center' }}>
+              Explore Charities
+            </Link>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 40, scale: 0.95 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2, cubicBezier: [0.16, 1, 0.3, 1] }}
+          style={{ position: 'relative' }}
+        >
+          {/* Neon Glow Background */}
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '120%', height: '120%', background: 'radial-gradient(circle, rgba(0,245,160,0.15) 0%, rgba(0,0,0,0) 70%)', zIndex: 0, pointerEvents: 'none' }}></div>
+          
+          <img 
+            src="https://images.unsplash.com/photo-1587329310686-91414b8e3cb7?q=80&w=1200" 
+            alt="Golf Course Action" 
+            style={{ width: '100%', height: 'auto', borderRadius: '32px', position: 'relative', zIndex: 1, border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 30px 60px rgba(0,0,0,0.6)', objectFit: 'cover', aspectRatio: '4/3' }} 
+          />
+          
+          {/* Floating Interactive Badge */}
+          <motion.div 
+             animate={{ y: [0, -15, 0] }}
+             transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+             className="glass glass-hover"
+             style={{ position: 'absolute', bottom: '-30px', left: '-30px', zIndex: 2, padding: '1.5rem 2rem', display: 'flex', alignItems: 'center', gap: '1.25rem', border: '1px solid var(--accent-secondary)' }}
+          >
+             <div style={{ background: 'rgba(0, 217, 255, 0.1)', padding: '1rem', borderRadius: '50%' }}>
+                <Trophy size={32} color="var(--accent-secondary)" />
+             </div>
+             <div>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: '800' }}>Current Jackpot</p>
+                <p style={{ fontSize: '2rem', fontWeight: '900', color: 'var(--text-primary)', lineHeight: 1, marginTop: '0.25rem' }}>$24,500</p>
+             </div>
+          </motion.div>
+        </motion.div>
+      </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginTop: '4rem' }}>
         <FeatureCard 
