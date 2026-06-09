@@ -5,6 +5,10 @@ const Charity = require('../models/Charity');
 
 console.log("✅ Charity Route Loaded");
 
+router.get('/test', (req, res) => {
+    res.json({ message: 'Charity Route Working' });
+});
+
 // Get all charities with search/filter
 router.get('/', async (req, res) => {
     try {
