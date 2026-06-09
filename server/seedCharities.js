@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Charity = require('./models/Charity');
 
-const MONGO_URI = 'mongodb://localhost:27017/golf-charity';
+const MONGO_URI =  "mongodb+srv://vickyk15009_db_user:vicky123@cluster0.go9c6aq.mongodb.net/golf-charity?retryWrites=true&w=majority";
 
 const charities = [
   {
