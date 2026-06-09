@@ -58,6 +58,10 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
+app.get('/test', (req, res) => {
+  res.json({ message: 'Backend Working' });
+});
+
 // Error Handler
 app.use((err, req, res, next) => {
     console.error(err.stack);
